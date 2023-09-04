@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prova AC1 Algoritimos</title>
+</head>
+
+<body>
+
+    <p>Digite a quantidade de energia consumida em kWh (apenas números):</p>
+    <input type="number" id="ipt_kwh">
+    <p>Bandeira tarifária da energia ("vermelha", "amarela" ou "verde"):</p>
+    <input id="ipt_bandeira">
+    <p>Volume de água consumido em litros (apenas números):</p>
+    <input type="number" id="ipt_qtdAgua">
+    <p>Quantidade de vazamentos de água na casa (apenas números):</p>
+    <input type="number" id="ipt_qtdVazamento">
+    <p>Volume de gás consumido em litros (apenas números):</p>
+    <input type="number" id="ipt_qtdGas">
+    <p>Valor base do plano de internet (apenas números):</p>
+    <input type="number" id="ipt_planoInter">
+    <p>Indicação se há uma linha telefônica vinculada ao plano de internet ("sim" ou "não"):</p>
+    <input id="ipt_linhaTel">
+    <button onclick="Calcular()">Calcular Despesas Fixas</button>
+    <br>
+    <div id="div_exibir"></div>
+
+</body>
+<script>
+    function Calcular() {
+        var kwh = Number(ipt_kwh.value);
+        var valorKWH = 0;
+        var valorFinalKWH = 0;
+        var bandeira = ipt_bandeira.value;
+        var qtdAgua = Number(ipt_qtdAgua.value);
+        var valorAgua = 3.50;
+        var valorFinalAgua = 0;
+        var qtdVazamento = Number(ipt_qtdVazamento.value);
+        var qtdGas = Number(ipt_qtdGas.value);
+        var valorFinalGas = qtdGas * 2.50;
+        var planoInter = Number(ipt_planoInter.value);
+        var linhaTel = ipt_linhaTel.value;
+        var valorTotal = 0
+
+        if (kwh <= 50) {
+
+            if (bandeira == "verde") {
+                valorKWH = 0.75 * 0.90;
+                valorFinalKWH = kwh * valorKWH;
+            } else {
+                if (bandeira == "amarela") {
+                    valorKWH = 0.90 * 0.90;
+                    valorFinalKWH = kwh * valorKWH;
+                } if (bandeira == "vermelha") {
+                    valorKWH = 0.90;
+                    valorFinalKWH = kwh * valorKWH;
+                }
+
+            }
+
+        } else {
+
+            if (bandeira == "verde") {
+                valorKWH = 0.75
+                valorFinalKWH = kwh * valorKWH;
+            } else {
+                if (bandeira == "amarela") {
+                    valorKWH = 0.90
+                    valorFinalKWH = kwh * valorKWH;
+                } if (bandeira == "vermelha") {
+                    valorKWH = 1
+                    valorFinalKWH = kwh * valorKWH;
+                }
+            }
+
+        }
+
+        if (qtdVazamento > 0) {
+            valorFinalAgua = (qtdAgua * valorAgua) + 10 * qtdVazamento;
+
+        } else {
+            valorFinalAgua = qtdAgua * valorAgua;
+        }
+
+        if (linhaTel == "sim") {
+            planoInter = planoInter * 1.25;
+            valorTotal = planoInter + valorFinalAgua + valorFinalGas + valorFinalKWH;
+
+            div_exibir.innerHTML = `Com o consumo de ${kwh} kWh na bandeira ${bandeira}, a conta de energia totaliza R$ ${valorFinalKWH}.<br>
+
+                                    Com o consumo de ${qtdAgua} litros de água contendo ${qtdVazamento} vazamentos, a conta de água totaliza R$ ${valorFinalAgua}.<br>
+
+                                    Com o consumo de ${qtdGas} litros de gás, a conta de gás totaliza R$ ${valorFinalGas}.<br>
+
+                                    Com um valor base de R$ ${planoInter} no plano de internet , a conta de internet/telefone totaliza R$ ${planoInter}.<br>
+
+                                    Gasto total de despesas mensal: R$ ${valorTotal}.`;
+        } else {
+            valorTotal = planoInter + valorFinalAgua + valorFinalGas + valorFinalKWH;
+            div_exibir.innerHTML = `Com o consumo de ${kwh} kWh na bandeira ${bandeira}, a conta de energia totaliza R$ ${valorFinalKWH}.<br>
+
+                                    Com o consumo de ${qtdAgua} litros de água contendo ${qtdVazamento} vazamentos, a conta de água totaliza R$ ${valorFinalAgua}.<br>
+
+                                    Com o consumo de ${qtdGas} litros de gás, a conta de gás totaliza R$ ${valorFinalGas}.<br>
+
+                                    Com um valor base de R$ ${planoInter} no plano de internet , a conta de internet/telefone totaliza R$ ${planoInter}.<br>
+
+                                    Gasto total de despesas mensal: R$ ${valorTotal}.`;
+        };
+    }
+</script>
+
+</html>
